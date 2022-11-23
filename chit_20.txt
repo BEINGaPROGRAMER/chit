@@ -1,0 +1,135 @@
+Chit 20 –
+use my_db
+• Create Collection
+db.createCollection("students")
+• Insert some documents
+db.students.insert([
+... {
+... "rollno": 1,
+... "name": "Navin",
+... "subject": "DMSA",
+... "marks": 78
+... },
+... {
+... "rollno": 2,
+... "name": "Anusha",
+... "subject": "OSD",
+... "marks": 75
+... },
+... {
+... "rollno": 3,
+... "name": "Ravi",
+... "subject": "TOC",
+... "marks": 69
+... },
+... {
+... "rollno": 4,
+... "name": "Veena",
+... "subject": "TOC",
+... "marks": 70
+... },
+... {
+... "rollno": 5,
+... "name": "Pravini",
+... "subject": "OSD",
+... "marks": 80
+... },
+... {
+... "rollno": 6,
+... "name": "Reena",
+... "subject": "DMSA",
+... "marks": 50
+... },
+... {
+... "rollno": 7,
+... "name": "Geeta",
+... "subject": "CN",
+... "marks": 90
+... },
+... {
+... "rollno": 8,
+... "name": "Akash",
+... "subject": "CN",
+... "marks": 85
+... }
+... ])
+• Create Single Index.
+db.students.createIndex({rollno: 1})
+• Create Compound Index.
+db.students.createIndex({subject: 1, name: 1})
+• Create Unique on Collection
+db.students.createIndex({name: 1}, {unique: true})
+• Show Index Information
+db.students.getIndexes()
+• Remove Index
+db.students.dropIndex({rollno: 1})
+• Write aggregate function to find Max marks of Each Subject.
+db.students.aggregate(
+... [
+... {
+... $group: {
+... _id: "$subject",
+... max_marks: {$max: "$marks"}
+... }
+... }
+... ]).pretty()
+• Write aggregate function to find Min marks of Each Subject.
+db.students.aggregate(
+... [
+... {
+... $group: {
+... _id: "$subject",
+... min_marks: {$min: "$marks"}
+... }
+... }
+... ]).pretty()
+• Write aggregate function to find Sum of marks of Each Subject.
+db.students.aggregate(
+... [
+... {
+... $group: {
+... _id: "$subject",
+... sum_marks: {$sum: "$marks"}
+... }
+... }
+... ]).pretty()
+• Write aggregate function to find Avg of marks of Each Subject.
+db.students.aggregate(
+... [
+... {
+... $group: {
+... _id: "$subject",
+... avg_marks: {$avg: "$marks"}
+... }
+... }
+... ]).pretty()
+• Write aggregate function to find first record of Each Subject.
+db.students.aggregate(
+... [
+... {
+... $group: {
+... _id: "$subject",
+... first_record: {$first: "$subject"}
+... }
+... }
+... ]).pretty()
+• Write aggregate function to find last record of Each Subject.
+db.students.aggregate(
+... [
+... {
+... $group: {
+... _id: "$subject",
+... last_record: {$last: "$subject"}
+... }
+... }
+... ]).pretty()
+• Write aggregate function to find count number of records of each subject
+db.students.aggregate(
+... [
+... {
+... $group: {
+... _id: "$subject",
+... no_of_subjects: {$sum: 1}
+... }
+... }
+... ]).pretty()

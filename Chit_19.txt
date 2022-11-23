@@ -1,0 +1,7 @@
+1. create table emp(Eno int Primary Key Auto_Increment,Ename varchar(50)NOT NULL,Address varchar(50) default 'Nashik',Joindate date);
+2. alter table emp Auto_Increment=101;
+3. alter table emp add Post varchar(50);
+4. create index i1 on emp(Ename);
+   show index from emp;
+5. create view v1 as select(Ename) from emp;
+   select * from v1;

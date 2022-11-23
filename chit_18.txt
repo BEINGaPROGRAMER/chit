@@ -1,0 +1,14 @@
+1)select distinct address from employee;
+2)select max(salary),min(salary)from employee;
+3)select * from employee order by salary;
+4)select * from employee where address in ('pune','nashik');
+5)select ename from employee where commision=0;
+6)update employee set address='nashik' where ename='amit';
+7)select ename from employee where ename like 'a%';
+8)select count(*) as staff_no,address from employee where address='mumbai';
+9)select count(*) as staff_no,address from employee group by address;
+9)select address from employee,project where address=addr;
+10)select min(salary),address from employee group by address;
+11)select max(salary),address from employee group by address;
+12)select max(salary),address from employee where salary>26000 group by address;
+13)delete from employee where salary>30000;

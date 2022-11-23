@@ -1,0 +1,5 @@
+1. select * from loan order by amount desc;
+   &
+   select * from loan order by loan_no;
+2. 
+3. select c_name,c_city,street from customer c,loan l,account a,borrower b where c.c_no=b.c_no and l.loan_no=b.loan_no and l.b_name=a.b_name and amount>3*(balance);

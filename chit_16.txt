@@ -1,0 +1,87 @@
+ Chit 16 –
+use department
+db.createCollection("teachers")
+db.teachers.insert([
+... {
+... "name": "Rahul",
+... "department": "Computer",
+... "experience": 4,
+... "salary": 40000
+... },
+... {
+... "name": "Sonali",
+... "department": "Computer",
+... "experience": 10,
+... "salary": 90000
+... },
+... {
+... "name": "Vijay",
+... "department": "Entc",
+... "experience": 5,
+... "salary": 50000
+... },
+... {
+... "name": "Archana",
+... "department": "Entc",
+... "experience": 12,
+... "salary": 100000
+... },
+... {
+... "name": "Tushar",
+... "department": "It",
+... "experience": 8,
+... "salary": 95000
+... },
+... {
+... "name": "Manisha",
+... "department": "It",
+... "experience": 10,
+... "salary": 80000
+... },
+... {
+... "name": "Priya",
+... "department": "Civil",
+... "experience": 7,
+... "salary": 75000
+... },
+... {
+... "name": "Sachin",
+... "department": "Mechanical",
+... "experience": 5,
+... "salary": 50000
+... }
+... ])
+QUERIES
+• Display the department wise average salary. 
+db.teachers.aggregate(
+... [
+... {
+... $group: {
+... _id: "$department",
+... avg_salary: {$avg: "$salary"}
+... }
+... }
+... ]).pretty()
+• Display the no. Of employees working in each department. 
+db.teachers.aggregate(
+... [
+... {
+... $group: {
+... _id: "$department",
+... no_of_employees: {$sum: 1}
+... }
+... }
+... ]).pretty()
+• Display the department wise minimum salary.
+db.teachers.aggregate(
+... [
+... {
+... $group: {
+... _id: "$department",
+... min_salary: {$min: "$salary"}
+... }
+... }
+... ]).pretty()
+• Apply index and drop index
+db.teachers.createIndex({name: 1})
+db.teachers.dropIndex({name: 1})

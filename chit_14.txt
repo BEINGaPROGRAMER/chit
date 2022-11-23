@@ -1,0 +1,191 @@
+) Chit 14 –
+use college_db
+db.createCollection("teachers")
+db.createCollection("departments")
+db.createCollection("students")
+db.departments.insert([
+... {
+... "dno": 1,
+... "dname": "Computer"
+... },
+... {
+... "dno": 2,
+... "dname": "It"
+... },
+... {
+... "dno": 3,
+... "dname": "Entc"
+... },
+... {
+... "dno": 4,
+... "dname": "Mechanical"
+... },
+... {
+... "dno": 1,
+... "dname": "Civil"
+... }
+... ])
+db.teachers.insert([
+ {
+ "tname": "Rahul",
+ "dno": {
+ "$ref": "departments",
+ "$id": ObjectId("6379e1b2a8c2f73b2d061dd5")
+ },
+ "experience": 4,
+ "salary": 40000,
+ "date_of_joining": "2018-03-12"
+ },
+ {
+ "tname": "Sonali",
+ "dno": {
+ "$ref": "departments",
+ "$id": ObjectId("6379e1b2a8c2f73b2d061dd5")
+ },
+ "experience": 10,
+ "salary": 90000,
+ "date_of_joining": "2016-02-14"
+ },
+ {
+ "tname": "Vijay",
+ "dno": {
+ "$ref": "departments",
+ "$id": ObjectId("6379e1b2a8c2f73b2d061dd7")
+ },
+ "experience": 5,
+ "salary": 50000,
+ "date_of_joining": "2019-04-16"
+ },
+ {
+ "tname": "Archana",
+ "dno": {
+ "$ref": "departments",
+ "$id": ObjectId("6379e1b2a8c2f73b2d061dd7")
+ },
+ "experience": 12,
+ "salary": 100000,
+ "date_of_joining": "2013-07-19"
+ },
+ {
+ "tname": "Tushar",
+ "dno": {
+ "$ref": "departments",
+ "$id": ObjectId("6379e1b2a8c2f73b2d061dd8")
+ },
+ "experience": 8,
+ "salary": 95000,
+ "date_of_joining": "2017-05-17"
+ },
+ {
+ "tname": "Manisha",
+ "dno": {
+ "$ref": "departments",
+ "$id": ObjectId("6379e1b2a8c2f73b2d061dd8")
+ },
+ "experience": 10,
+ "salary": 80000,
+ "date_of_joining": "2016-01-26"
+ },
+ {
+ "tname": "Priya",
+ "dno": {
+ "$ref": "departments",
+ "$id": ObjectId("6379e1b2a8c2f73b2d061dd9")
+ },
+ "experience": 7,
+ "salary": 75000,
+ "date_of_joining": "2015-04-26"
+ },
+ {
+ "tname": "Sachin",
+ "dno": {
+ "$ref": "departments",
+ "$id": ObjectId("6379e1b2a8c2f73b2d061dd6")
+ },
+ "experience": 5,
+ "salary": 50000,
+ "date_of_joining": "2020-05-15"
+ }
+])
+db.students.insert([
+... {
+... "sname": "Varun",
+... "rollno": 4,
+... "class": "A"
+... },
+... {
+... "sname": "Aditya",
+... "rollno": 12,
+... "class": "B"
+... },
+... {
+... "sname": "Om",
+... "rollno": 14,
+... "class": "A"
+... },
+... {
+... "sname": "Rajat",
+... "rollno": 19,
+... "class": "B"
+... },
+... {
+... "sname": "Prathamesh",
+... "rollno": 41,
+... "class": "A"
+... },
+... {
+... "sname": "Aditya",
+... "rollno": 42,
+... "class": "B"
+... },
+... {
+... "sname": "Abhishek",
+... "rollno": 45,
+... "class": "A"
+... },
+... {
+... "sname": "Atharva",
+... "rollno": 58,
+... "class": "B"
+... }
+... ])
+QUERIES
+• Find the information about all teachers of Dno=2 and having salary greater than or equal 
+to 10,000/-
+db.teachers.aggregate([
+ {
+ $lookup: {
+ from: "departments",
+ localField: "dno.$id",
+ foreignField: "_id",
+ as: "dno"
+ }
+ },
+ {
+ $match: {
+"dno.dno":2,
+salary: {$gte: 10000}
+}
+ },
+ {
+ $project: {
+tname: 1,
+"dno.dno": 1,
+"dno.dname": 1,
+experience: 1,
+salary: 1,
+date_of_joining: 1,
+_id: 0
+}
+ }
+]).pretty()
+• Find the student information having Roll_no=2 or Sname='xyz'
+db.students.find({$or: [{roll_no: 2}, {sname: 'xyz'}]}).pretty()
+• Update student name whose Roll_No=5
+db.students.update({roll_no: 5}, {$set: {sname: 'Shree'}})
+• Delete all student whose Class is 'FE'
+db.students.remove({class: 'FE'})
+• Find information of Teachers whose Experience is more than 10 years
+db.teachers.find({experience: {$gt: 10}}).pretty()
+• Apply index on Students Collection
+db.students.createIndex({roll_no: 1})

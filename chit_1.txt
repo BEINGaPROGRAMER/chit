@@ -1,0 +1,8 @@
+
+q-3 select* from (ct,at) where ct.cid=at.cid and city=(select city from ct c where cname='pooja');
+q-4 select * from (ct,at) where ct.cid=at.cid and ammount<(select avg(ammount) from at);
+q-5 select * from (ct,at) where ct.cid=at.cid and ammount=(select max(ammount) from at);
+q-6 select cid,acc_type,ammount from at where ammount in (select min(ammount) from at group by acc_type);
+q-7 select cid,ammount from at where ammount>all (select ammount from at where acc_type='saving');
+
+

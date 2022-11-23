@@ -1,0 +1,106 @@
+ Chit 8 –
+use college
+db.createCollection("students")
+db.students.insert([
+... {
+... "rno": "1",
+... "name": "Omkar",
+... "subject": "Geometry",
+... "class": "A",
+... "fees": 50000,
+... "marks": 90
+... },
+... {
+... "rno": "2",
+... "name": "Rahul",
+... "subject": "Science",
+... "class": "A",
+... "fees": 60000,
+... "marks": 80
+... },
+... {
+... "rno": "3",
+... "name": "Yash",
+... "subject": "Algebra",
+... "class": "A",
+... "fees": 30000,
+... "marks": 85
+... },
+... {
+... "rno": "4",
+... "name": "Ved",
+... "subject": "History",
+... "class": "A",
+... "fees": 40000,
+... "marks": 93
+... },
+... {
+... "rno": "5",
+... "name": "Shree",
+... "subject": "Geography",
+... "class": "A",
+... "fees": 35000,
+... "marks": 79
+... },
+... {
+... "rno": "1",
+... "name": "Yajur",
+... "subject": "Geometry",
+... "class": "B",
+... "fees": 45000,
+... "marks": 90
+... },
+... {
+... "rno": "2",
+... "name": "Ganraj",
+... "subject": "Science",
+... "class": "B",
+... "fees": 55000,
+... "marks": 87
+... },
+... {
+... "rno": "3",
+... "name": "Pratham",
+... "subject": "Algebra",
+... "class": "B",
+... "fees": 63000,
+... "marks": 97
+... },
+... {
+... "rno": "4",
+... "name": "Shreyash",
+... "subject": "History",
+... "class": "B",
+... "fees": 30000,
+... "marks": 88
+... },
+... {
+... "rno": "5",
+... "name": "Raj",
+... "subject": "Geography",
+... "class": "B",
+... "fees": 42000,
+... "marks": 85
+... }
+... ])
+QUERIES
+• Class wise total number of students
+var map = function() {emit(this.class, this._id)}
+var reduce = function(key, values) {return values.length}
+db.students.mapReduce(map, reduce, {out: 'classwise_total'})
+db.classwise_total.find().pretty()
+• Class wise total fees 
+var map = function() {emit(this.class, this.fees)}
+var reduce = function(key, values) {return Array.sum(values)}
+db.students.mapReduce(map, reduce, {out: 'classwise_fees'})
+db.classwise_fees.find().pretty()
+• Subject wise total marks 
+var map = function() {emit(this.subject, this.marks)}
+var reduce = function(key, values) {return Array.sum(values)}
+db.students.mapReduce(map, reduce, {out: 'subjectwise_marks'})
+db.subjectwise_marks.find().pretty()
+• Subject wise total students
+var map = function() {emit(this.subject, this._id)}
+var reduce = function(key, values) {return values.length}
+db.students.mapReduce(map, reduce, {out: 'subjectwise_total'})
+db.subjectwise_total.find().pretty()

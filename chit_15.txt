@@ -1,0 +1,191 @@
+ Chit 15 –
+• Create database Institute.
+use Institute
+• Create collection Students.
+db.createCollection('students')
+• Insert 10 documents with above mentioned structure.
+db.students.insert([
+ {
+ "roll_no": 1,
+ "stud_name": "A",
+ "age": 10,
+ "branch": "Comp",
+ "address": {
+ "city": "Pune",
+ "state": "MH"
+ },
+ "hobbies": [
+ "playing",
+ "reading"
+ ]
+ },
+ {
+ "roll_no": 2,
+ "stud_name": "B",
+ "age": 11,
+ "branch": "Comp",
+ "address": {
+ "city": "Mumbai",
+ "state": "MH"
+ },
+ "hobbies": [
+ "reading"
+ ]
+ },
+ {
+ "roll_no": 3,
+ "stud_name": "C",
+ "age": 12,
+ "branch": "Civil",
+ "address": {
+ "city": "Nashik",
+ "state": "MH"
+ },
+ "hobbies": [
+ "reading",
+ "singing"
+ ]
+ },
+ {
+ "roll_no": 4,
+ "stud_name": "D",
+ "age": 13,
+ "branch": "Mech",
+ "address": {
+ "city": "Pune",
+ "state": "MH"
+ },
+ "hobbies": [
+ "singing",
+ "dancing"
+ ]
+ },
+ {
+ "roll_no": 5,
+ "stud_name": "E",
+ "age": 14,
+ "branch": "Comp",
+ "address": {
+ "city": "Mumbai",
+ "state": "MH"
+ },
+ "hobbies": [
+ "singing"
+ ]
+ },
+ {
+ "roll_no": 6,
+ "stud_name": "F",
+ "age": 15,
+ "branch": "E&TC",
+ "address": {
+ "city": "Pune",
+ "state": "MH"
+ },
+ "hobbies": [
+ "dancing"
+ ]
+ },
+ {
+ "roll_no": 7,
+ "stud_name": "G",
+ "age": 16,
+ "branch": "IT",
+ "address": {
+ "city": "Pune",
+ "state": "MH"
+ },
+ "hobbies": [
+ "playing",
+ "reading",
+ "singing"
+ ]
+ },
+ {
+ "roll_no": 8,
+ "stud_name": "H",
+ "age": 17,
+ "branch": "Comp",
+ "address": {
+ "city": "Pune",
+ "state": "MH"
+ },
+ "hobbies": [
+ "playing",
+ "reading",
+ "drawing"
+ ]
+ },
+ {
+ "roll_no": 9,
+ "stud_name": "G",
+ "age": 18,
+ "branch": "Civil",
+ "address": {
+ "city": "Pune",
+ "state": "MH"
+ },
+ "hobbies": [
+ "drumming"
+ ]
+ },
+ {
+ "roll_no": 10,
+ "stud_name": "H",
+ "age": 19,
+ "branch": "Mech",
+ "address": {
+ "city": "Nashik",
+ "state": "MH"
+ },
+ "hobbies": [
+ "calling"
+ ]
+ }
+])
+• Display all students’ information.
+db.students.find().pretty()
+• Display Student information whose age is greater than 15.
+db.students.find({age: {$gt: 15}}).pretty()
+• Display Student information sorted on name field
+db.students.find().sort({stud_name: 1}).pretty()
+• Update student branch Computer of RollNo 3.
+db.students.update({roll_no: 3}, {$set: {branch: 'Comp'}})
+• Remove document with RollNo 1
+db.students.remove({roll_no: 1})
+• Display Student information whose name starts with A
+db.students.find({stud_name: \^A\}).pretty()
+• Display the total numbers of documents available in collection.
+db.students.aggregate(
+[
+{ 
+$group: {
+_id: '$roll_no',
+total_documents : {$sum: 1}
+}
+}
+]).pretty()
+• Display only first 5 documents.
+db.students.find().limit(5).pretty()
+• Display all documents instead of first 3.
+db.students.find().skip(3).pretty()
+• Display the name of Students who live in Pune City.
+db.students.find({'address.city': 'Pune'}, {stud_name: 1, _id: 0}).pretty()
+• Display the list of different cities from where students are coming.
+db.students.distinct('address.city')
+• Display the list of different cities with number of students from belonging to that city.
+db.students.aggregate(
+[
+{ 
+$group: {
+_id: '$address.city',
+total_students: {$sum: 1}
+}
+}
+]).pretty()
+• Display only Name of all students.
+db.students.find({}, {_id: 0, stud_name: 1}).pretty()
+• Display the hobbies of each student.
+db.students.find({}, {_id: 0, stud_name: 1, hobbies: 1}).pretty()
+• Drop Collection
+db.students.drop()

@@ -1,0 +1,20 @@
+CREATE OR REPLACE PROCEDURE PROC_GRADE AS
+cursor c1 is select NAME,TOTAL_MARKS from STUD_MARKS;
+rno number;
+ne varchar(20);
+tm number;
+BEGIN
+open c1;
+LOOP
+fetch c1 into ne,tm;
+exit when c1%notfound;
+if(tm>=990 and tm<=1500) then
+insert into RESULT values(rno,ne,'DISTINCTION');
+elsif(tm>=900 and tm<=989) then
+insert into RESULT values(rno,ne,'FIRST CLASS');
+elsif(tm>=825 and tm<=899) then
+insert into RESULT values(rno,ne,'HIGHER SECOND CLASS');
+end if;
+end LOOP;
+close c1;
+END PROC_GRADE;

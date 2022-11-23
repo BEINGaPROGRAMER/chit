@@ -1,0 +1,7 @@
+1.) select b.book_id,title,publisher_name,author_name,noof_copies,branch_name from book b,book_authors a,book_copies c,library_branch l where b.book_id=a.book_id and 
+    b.book_id=c.book_id and l.branch_id=c.branch_id order by branch_name;
+2.) select card_no from book_leading where date_out between '2017-01-01' and '2017-06-31';
+3.) delete from book where title = 'Databases';
+4.) select count(*) as total_no_ofbooks,pub_year from book group by pub_year
+    order by pub_year;
+5.) create view v1 as select b.book_id,b.title, c.noof_copies from book b,book_copies c,library_branch l where b.book_id=c.book_id and c.branch_id=l.branch_id;

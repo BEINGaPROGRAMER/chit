@@ -1,0 +1,11 @@
+1.select distinct branch_name from loan;
+2.select * from loan where branch_name='akurdi'and amount>12000;
+3.select * from (loan,borrower)where loan.loan_no=borrower.loan_no;
+4.elect * from (loan,borrower)where loan.loan_no=borrower.loan_no and branch_name='akurdi' order by cust_name;
+5.select distinct c.cust_name from depositor d,borrower b,customer c where c.cust_name=d.cust_name or c.cust_name=b.cust_name;
+6.select avg(balance) from account where branch_name='akurdi';
+7.select b.branch_name,avg(balance) Avg_B from account a,branch b where a.branch_name=b.branch_name group by b.branch_name;
+8.select branch_name,count(d.acc_no) from depositor d,account a where d.acc_no=a.acc_no group by branch_name;
+9. select branch_name,avg(balance) from account  where (select avg(balance) from account) > 12000  group by branch_name;
+10. select count(*) from customer;
+11. delete from Loan where amount between 1300 and 1500;

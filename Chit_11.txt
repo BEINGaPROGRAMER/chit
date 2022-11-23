@@ -1,0 +1,10 @@
+create or replace trigger TRI
+    before update or delete on LIBRARY for each row
+    declare
+    begin
+    if updating then
+    insert into LIBRARY_AUDIT values (:Old.BOOKNO,:Old.B_NAME);
+    elsif deleting then
+    insert into LIBRARY_AUDIT values (:Old.BOOKNO,:Old.B_NAME);
+    end if;
+    end;

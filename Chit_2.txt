@@ -1,0 +1,29 @@
+SET SERVEROUTPUT ON;
+declare
+rno int;
+nob varchar(20);
+doi date;
+nod int;
+amt numeric(10,2);
+begin
+rno:=&ROLL_NO;
+nob:=&NAMEOFBOOK;
+select DATEOFISSUE into doi from BORROWER where ROLL_NO=rno and NAMEOFBOOK=nob;
+nod:=Sysdate-doi;
+if(nod>=30) then
+amt:=50*nod;
+elsif(nod>15 and nod<30) then
+amt:=5*nod;
+else
+dbms_output.put_line('No Fine.');
+end if;
+update BORROWER set status='R' where ROLL_NO=rno and NAMEOFBOOK=nob;
+if(nod>15) then
+insert into FINE values(rno,sysdate,amt);
+end if;
+end;
+Exception
+when no_data_found then
+dbms_output.put_line('No data Found');
+when others then
+dbms_output.put_line('Error!');
